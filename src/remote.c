@@ -711,7 +711,11 @@ int git_remote_connect(git_remote *remote, git_direction direction, const git_re
 
 	assert(remote);
 
-	GITERR_CHECK_VERSION(callbacks, GIT_REMOTE_CALLBACKS_VERSION, "git_remote_callbacks");
+	if (callbacks) {
+		GITERR_CHECK_VERSION(callbacks, GIT_REMOTE_CALLBACKS_VERSION, "git_remote_callbacks");
+		credentials = callbacks->credentials;
+		payload     = callbacks->payload;
+	}
 
 	t = remote->transport;
 
@@ -732,11 +736,6 @@ int git_remote_connect(git_remote *remote, git_direction direction, const git_re
 	 * transport registrations which map URI schemes to transport factories */
 	if (!t && (error = git_transport_new(&t, remote, url)) < 0)
 		return error;
-
-	if (callbacks) {
-		credentials = callbacks->credentials;
-		payload     = callbacks->payload;
-	}
 
 	if ((error = set_transport_callbacks(t, callbacks)) < 0 ||
 	    (error = t->connect(t, url, credentials, payload, direction, flags)) != 0)
