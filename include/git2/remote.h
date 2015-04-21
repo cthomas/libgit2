@@ -476,7 +476,7 @@ typedef struct {
 } git_fetch_options;
 
 #define GIT_FETCH_OPTIONS_VERSION 1
-#define GIT_FETCH_OPTIONS_INIT { GIT_FETCH_OPTIONS_VERSION }
+#define GIT_FETCH_OPTIONS_INIT { GIT_FETCH_OPTIONS_VERSION, GIT_REMOTE_CALLBACKS_INIT }
 
 /**
  * Initializes a `git_fetch_options` with default values. Equivalent to
@@ -515,7 +515,7 @@ typedef struct {
 } git_push_options;
 
 #define GIT_PUSH_OPTIONS_VERSION 1
-#define GIT_PUSH_OPTIONS_INIT { GIT_PUSH_OPTIONS_VERSION }
+#define GIT_PUSH_OPTIONS_INIT { GIT_PUSH_OPTIONS_VERSION, 0, GIT_REMOTE_CALLBACKS_INIT }
 
 /**
  * Initializes a `git_push_options` with default values. Equivalent to
