@@ -130,10 +130,12 @@ typedef struct git_submodule_update_options {
 	git_checkout_options checkout_opts;
 
 	/**
-	 * Callbacks to use for reporting fetch progress, and for acquiring
+	 * Options which control the fetch, including callbacks.
+	 *
+	 * The callbacks to use for reporting fetch progress, and for acquiring
 	 * credentials in the event they are needed.
 	 */
-	git_remote_callbacks remote_callbacks;
+	git_fetch_options fetch_opts;
 
 	/**
 	 * The checkout strategy to use when the sub repository needs to
