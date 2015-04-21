@@ -2378,7 +2378,7 @@ int git_remote_upload(git_remote *remote, const git_strarray *refspecs, const gi
 	if ((error = git_push_finish(push, cbs)) < 0)
 		goto cleanup;
 
-	if (cbs->push_update_reference &&
+	if (cbs && cbs->push_update_reference &&
 	    (error = git_push_status_foreach(push, cbs->push_update_reference, cbs->payload)) < 0)
 		goto cleanup;
 

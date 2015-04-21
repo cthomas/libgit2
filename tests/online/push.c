@@ -369,7 +369,6 @@ void test_online_push__initialize(void)
 	cl_git_pass(git_remote_create(&_remote, _repo, "test", _remote_url));
 
 	record_callbacks_data_clear(&_record_cbs_data);
-	git_remote_set_callbacks(_remote, &_record_cbs);
 
 	cl_git_pass(git_remote_connect(_remote, GIT_DIRECTION_PUSH, NULL));
 
@@ -456,20 +455,19 @@ static void do_push(
 	size_t i;
 	int error;
 	git_strarray specs = {0};
-	git_remote_callbacks callbacks;
+	git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
 	record_callbacks_data *data;
 
 	if (_remote) {
 		/* Auto-detect the number of threads to use */
 		opts.pb_parallelism = 0;
 
-		memcpy(&callbacks, git_remote_get_callbacks(_remote), sizeof(callbacks));
+		//memcpy(&callbacks, git_remote_get_callbacks(_remote), sizeof(callbacks));
 		data = callbacks.payload;
 
 		callbacks.pack_progress = push_pack_progress_cb;
 		callbacks.push_transfer_progress = push_transfer_progress_cb;
 		callbacks.push_update_reference = record_push_status_cb;
-		cl_git_pass(git_remote_set_callbacks(_remote, &callbacks));
 
 		if (refspecs_len) {
 			specs.count = refspecs_len;
